@@ -11,6 +11,9 @@
     "files.trimTrailingWhitespace": false
   },
   "typescript.tsdk": "node_modules/typescript/lib",
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "never"
+  },
   "eslint.validate": [
     "javascript",
     "javascriptreact",
