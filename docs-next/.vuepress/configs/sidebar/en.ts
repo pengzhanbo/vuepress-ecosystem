@@ -27,7 +27,6 @@ export const sidebarEn: Sidebar = {
         { link: '/plugins/catalog', text: 'catalog' },
         { link: '/plugins/copy-code', text: 'copy-code' },
         { link: '/plugins/copyright', text: 'copyright' },
-        { link: '/plugins/external-link-icon', text: 'external-link-icon' },
         { link: '/plugins/medium-zoom', text: 'medium-zoom' },
         { link: '/plugins/nprogress', text: 'nprogress' },
         { link: '/plugins/photo-swipe', text: 'photo-swipe' },

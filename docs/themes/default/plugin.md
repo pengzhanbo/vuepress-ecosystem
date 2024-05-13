@@ -44,7 +44,7 @@ export default {
 
 - Details:
 
-  Enable custom containers that powered by [@vuepress/plugin-container](../../plugins/container.md) or not.
+  Enable custom containers that powered by [@vuepress/plugin-markdown-container](../../plugins/markdown-container.md) or not.
 
   `ContainerType` type is:
 
@@ -69,16 +69,6 @@ export default {
   Enable [@vuepress/plugin-copy-code](../../plugins/copy-code.md) or not.
 
   Object value is supported as plugin options.
-
-## themePlugins.externalLinkIcon
-
-- Type: `boolean`
-
-- Default: `true`
-
-- Details:
-
-  Enable [@vuepress/plugin-external-link-icon](../../plugins/external-link-icon.md) or not.
 
 ## themePlugins.git
 

@@ -1,10 +1,9 @@
 import { activeHeaderLinksPlugin } from '@vuepress/plugin-active-header-links'
 import { backToTopPlugin } from '@vuepress/plugin-back-to-top'
-import { containerPlugin } from '@vuepress/plugin-container'
 import { copyCodePlugin } from '@vuepress/plugin-copy-code'
-import { externalLinkIconPlugin } from '@vuepress/plugin-external-link-icon'
 import { gitPlugin } from '@vuepress/plugin-git'
 import { linksCheckPlugin } from '@vuepress/plugin-links-check'
+import { markdownContainerPlugin } from '@vuepress/plugin-markdown-container'
 import { mediumZoomPlugin } from '@vuepress/plugin-medium-zoom'
 import { nprogressPlugin } from '@vuepress/plugin-nprogress'
 import { palettePlugin } from '@vuepress/plugin-palette'
@@ -22,7 +21,7 @@ import type {
 } from '../shared/index.js'
 import {
   assignDefaultLocaleOptions,
-  resolveContainerPluginOptions,
+  resolveMarkdownContainerPluginOptions,
 } from './utils/index.js'
 
 const __dirname = getDirname(import.meta.url)
@@ -101,22 +100,24 @@ export const defaultTheme = ({
           })
         : [],
 
-      // @vuepress/plugin-container
+      // @vuepress/plugin-markdown-container
       themePlugins.container?.tip !== false
-        ? containerPlugin(resolveContainerPluginOptions(localeOptions, 'tip'))
+        ? markdownContainerPlugin(
+            resolveMarkdownContainerPluginOptions(localeOptions, 'tip'),
+          )
         : [],
       themePlugins.container?.warning !== false
-        ? containerPlugin(
-            resolveContainerPluginOptions(localeOptions, 'warning'),
+        ? markdownContainerPlugin(
+            resolveMarkdownContainerPluginOptions(localeOptions, 'warning'),
           )
         : [],
       themePlugins.container?.danger !== false
-        ? containerPlugin(
-            resolveContainerPluginOptions(localeOptions, 'danger'),
+        ? markdownContainerPlugin(
+            resolveMarkdownContainerPluginOptions(localeOptions, 'danger'),
           )
         : [],
       themePlugins.container?.details !== false
-        ? containerPlugin({
+        ? markdownContainerPlugin({
             type: 'details',
             before: (info) =>
               `<details class="custom-container details">${
@@ -126,33 +127,17 @@ export const defaultTheme = ({
           })
         : [],
       themePlugins.container?.codeGroup !== false
-        ? containerPlugin({
+        ? markdownContainerPlugin({
             type: 'code-group',
             before: () => `<CodeGroup>\n`,
             after: () => '</CodeGroup>\n',
           })
         : [],
       themePlugins.container?.codeGroupItem !== false
-        ? containerPlugin({
+        ? markdownContainerPlugin({
             type: 'code-group-item',
             before: (info) => `<CodeGroupItem title="${info}">\n`,
             after: () => '</CodeGroupItem>\n',
-          })
-        : [],
-
-      // @vuepress/plugin-external-link-icon
-      themePlugins.externalLinkIcon !== false
-        ? externalLinkIconPlugin({
-            locales: Object.entries(localeOptions.locales || {}).reduce(
-              (result, [key, value]) => {
-                result[key] = {
-                  openInNewWindow:
-                    value.openInNewWindow ?? localeOptions.openInNewWindow,
-                }
-                return result
-              },
-              {},
-            ),
           })
         : [],
 

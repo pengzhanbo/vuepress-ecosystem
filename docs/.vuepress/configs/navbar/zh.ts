@@ -25,7 +25,6 @@ export const navbarZh: NavbarConfig = [
           '/zh/plugins/catalog',
           '/zh/plugins/copy-code',
           '/zh/plugins/copyright',
-          '/zh/plugins/external-link-icon',
           '/zh/plugins/medium-zoom',
           '/zh/plugins/notice',
           '/zh/plugins/nprogress',
@@ -37,7 +36,7 @@ export const navbarZh: NavbarConfig = [
       },
       {
         text: 'Markdown',
-        children: ['/zh/plugins/container', '/zh/plugins/links-check'],
+        children: ['/zh/plugins/markdown-container', '/zh/plugins/links-check'],
       },
       {
         text: '搜索',

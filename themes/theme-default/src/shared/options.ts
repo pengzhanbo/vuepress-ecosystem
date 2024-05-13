@@ -19,7 +19,7 @@ export interface DefaultThemePluginsOptions {
   backToTop?: BackToTopPluginOptions | boolean
 
   /**
-   * Enable @vuepress/plugin-container or not
+   * Enable @vuepress/plugin-markdown-container or not
    */
   container?: {
     tip?: boolean
@@ -34,11 +34,6 @@ export interface DefaultThemePluginsOptions {
    * Enable @vuepress/plugin-copy-code or not
    */
   copyCode?: CopyCodePluginOptions | boolean
-
-  /**
-   * Enable @vuepress/plugin-external-link-icon or not
-   */
-  externalLinkIcon?: boolean
 
   /**
    * Enable @vuepress/plugin-git or not
@@ -94,6 +89,13 @@ export interface DefaultThemeLocaleData extends LocaleData {
    * @default true
    */
   colorModeSwitch?: boolean
+
+  /**
+   * Whether show external link icon
+   *
+   * @default true
+   */
+  externalLinkIcon?: boolean
 
   /**
    * Home path of current locale

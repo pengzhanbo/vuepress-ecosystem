@@ -44,7 +44,7 @@ export default {
 
 - 详情：
 
-  是否启用由 [@vuepress/plugin-container](../../plugins/container.md) 支持的自定义容器。
+  是否启用由 [@vuepress/plugin-markdown-container](../../plugins/markdown-container.md) 支持的自定义容器。
 
   `ContainerType` 类型为：
 
@@ -69,16 +69,6 @@ export default {
   是否启用 [@vuepress/plugin-copy-code](../../plugins/copy-code.md) 。
 
   支持对象格式以作为插件选项。
-
-## themePlugins.externalLinkIcon
-
-- 类型： `boolean`
-
-- 默认值： `true`
-
-- 详情：
-
-  是否启用 [@vuepress/plugin-external-link-icon](../../plugins/external-link-icon.md) 。
 
 ## themePlugins.git
 

@@ -25,7 +25,6 @@ export const navbarEn: NavbarConfig = [
           '/plugins/catalog',
           '/plugins/copy-code',
           '/plugins/copyright',
-          '/plugins/external-link-icon',
           '/plugins/medium-zoom',
           '/plugins/notice',
           '/plugins/nprogress',
@@ -37,7 +36,7 @@ export const navbarEn: NavbarConfig = [
       },
       {
         text: 'Markdown',
-        children: ['/plugins/container', '/plugins/links-check'],
+        children: ['/plugins/markdown-container', '/plugins/links-check'],
       },
       {
         text: 'Search',

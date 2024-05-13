@@ -26,7 +26,7 @@
       "path": "./plugins/plugin-comment/tsconfig.build.json"
     },
     {
-      "path": "./plugins/plugin-container/tsconfig.build.json"
+      "path": "./plugins/plugin-markdown-container/tsconfig.build.json"
     },
     {
       "path": "./plugins/plugin-copy-code/tsconfig.build.json"
@@ -36,9 +36,6 @@
     },
     {
       "path": "./plugins/plugin-docsearch/tsconfig.build.json"
-    },
-    {
-      "path": "./plugins/plugin-external-link-icon/tsconfig.build.json"
     },
     {
       "path": "./plugins/plugin-feed/tsconfig.build.json"

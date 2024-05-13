@@ -10,7 +10,6 @@ export const sidebarEn: SidebarConfig = {
         '/plugins/catalog',
         '/plugins/copy-code',
         '/plugins/copyright',
-        '/plugins/external-link-icon',
         '/plugins/medium-zoom',
         '/plugins/notice',
         '/plugins/nprogress',
@@ -22,7 +21,7 @@ export const sidebarEn: SidebarConfig = {
     },
     {
       text: 'Markdown',
-      children: ['/plugins/container', '/plugins/links-check'],
+      children: ['/plugins/markdown-container', '/plugins/links-check'],
     },
     {
       text: 'Content Search',

@@ -1,28 +1,28 @@
 {
-  "name": "@vuepress/plugin-external-link-icon",
+  "name": "@vuepress/plugin-markdown-container",
   "version": "2.0.0-rc.28",
-  "description": "VuePress plugin - external link icon",
+  "description": "VuePress plugin - markdown container",
   "keywords": [
     "vuepress-plugin",
     "vuepress",
     "plugin",
-    "external-link"
+    "markdown",
+    "container"
   ],
-  "homepage": "https://ecosystem.vuejs.press/plugins/external-link-icon.html",
+  "homepage": "https://ecosystem.vuejs.press/plugins/markdown-container.html",
   "bugs": {
     "url": "https://github.com/vuepress/ecosystem/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/vuepress/ecosystem.git",
-    "directory": "plugins/plugin-external-link-icon"
+    "directory": "plugins/plugin-markdown-container"
   },
   "license": "MIT",
   "author": "meteorlxy",
   "type": "module",
   "exports": {
     ".": "./lib/node/index.js",
-    "./client": "./lib/client/index.js",
     "./package.json": "./package.json"
   },
   "main": "./lib/node/index.js",
@@ -32,14 +32,17 @@
   ],
   "scripts": {
     "build": "tsc -b tsconfig.build.json",
-    "clean": "rimraf --glob ./lib ./*.tsbuildinfo",
-    "copy": "cpx \"src/**/*.css\" lib"
+    "clean": "rimraf --glob ./lib ./*.tsbuildinfo"
   },
   "dependencies": {
-    "vue": "^3.4.27"
+    "@types/markdown-it": "^14.1.1",
+    "markdown-it-container": "^4.0.0"
   },
   "peerDependencies": {
     "vuepress": "2.0.0-rc.9"
+  },
+  "devDependencies": {
+    "markdown-it": "^14.1.0"
   },
   "publishConfig": {
     "access": "public"
