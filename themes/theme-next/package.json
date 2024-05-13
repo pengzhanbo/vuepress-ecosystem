@@ -58,6 +58,7 @@
     "@vuepress/plugin-sitemap": "workspace:~",
     "@vuepress/plugin-theme-data": "workspace:~",
     "@vueuse/core": "^10.9.0",
+    "chokidar": "^3.6.0",
     "markdown-it-container": "^4.0.0",
     "nanoid": "^5.0.7",
     "vue": "^3.4.27"

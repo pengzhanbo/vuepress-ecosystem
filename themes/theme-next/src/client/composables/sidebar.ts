@@ -1,3 +1,4 @@
+import { sidebarData as sidebarDataRaw } from '@internal/sidebar'
 import { useMediaQuery } from '@vueuse/core'
 import {
   computed,
@@ -10,9 +11,15 @@ import {
 } from 'vue'
 import type { ComputedRef, Ref } from 'vue'
 import { resolveRoutePath } from 'vuepress/client'
-import type { Sidebar, SidebarItem } from '../../shared/index.js'
+import type { ResolvedSidebarItem } from '../../shared/resolved/sidebar.js'
 import { ensureStartingSlash, isActive } from '../utils/index.js'
 import { useData } from './data.js'
+
+export type SidebarDataRef = Ref<Record<string, ResolvedSidebarItem[]>>
+
+const sidebarData: SidebarDataRef = ref(sidebarDataRaw)
+
+export const useSidebarData = (): SidebarDataRef => sidebarData
 
 export interface SidebarLink {
   text: string
@@ -32,8 +39,8 @@ export interface SidebarControl {
 
 export interface UseSidebarReturn {
   isOpen: Ref<boolean>
-  sidebar: Ref<SidebarItem[]>
-  sidebarGroups: Ref<SidebarItem[]>
+  sidebar: Ref<ResolvedSidebarItem[]>
+  sidebarGroups: Ref<ResolvedSidebarItem[]>
   hasSidebar: ComputedRef<boolean>
   hasAside: ComputedRef<boolean>
   leftAside: ComputedRef<boolean>
@@ -53,9 +60,8 @@ export function useSidebar(): UseSidebarReturn {
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   const _sidebar = computed(() => {
-    const sidebarConfig = theme.value.sidebar
     const relativePath = page.value.filePathRelative || ''
-    return sidebarConfig ? getSidebar(sidebarConfig, relativePath) : []
+    return getSidebar(relativePath)
   })
 
   const sidebar = ref(_sidebar.value)
@@ -152,7 +158,7 @@ export function useCloseSidebarOnEscape(
 }
 
 export function useSidebarControl(
-  item: ComputedRef<SidebarItem>,
+  item: ComputedRef<ResolvedSidebarItem>,
 ): SidebarControl {
   const { page, hash } = useData()
 
@@ -222,11 +228,10 @@ export function useSidebarControl(
  * as matching `guide/` and `/guide/`. If no matching config was found, it will
  * return empty array.
  */
-export function getSidebar(
-  _sidebar: Sidebar | undefined,
-  path: string,
-): SidebarItem[] {
-  if (Array.isArray(_sidebar)) return addBase(_sidebar)
+export function getSidebar(path: string): ResolvedSidebarItem[] {
+  // eslint-disable-next-line @typescript-eslint/naming-convention
+  const _sidebar = sidebarData.value
+  if (Array.isArray(_sidebar)) return _sidebar
   if (_sidebar == null) return []
 
   path = ensureStartingSlash(path)
@@ -241,16 +246,16 @@ export function getSidebar(
     })
 
   const sidebar = dir ? _sidebar[dir] : []
-  return Array.isArray(sidebar)
-    ? addBase(sidebar)
-    : addBase(sidebar.items, sidebar.base)
+  return sidebar as ResolvedSidebarItem[]
 }
 
 /**
  * Get or generate sidebar group from the given sidebar items.
  */
-export function getSidebarGroups(sidebar: SidebarItem[]): SidebarItem[] {
-  const groups: SidebarItem[] = []
+export function getSidebarGroups(
+  sidebar: ResolvedSidebarItem[],
+): ResolvedSidebarItem[] {
+  const groups: ResolvedSidebarItem[] = []
 
   let lastGroupIndex = 0
 
@@ -272,10 +277,12 @@ export function getSidebarGroups(sidebar: SidebarItem[]): SidebarItem[] {
   return groups
 }
 
-export function getFlatSideBarLinks(sidebar: SidebarItem[]): SidebarLink[] {
+export function getFlatSideBarLinks(
+  sidebar: ResolvedSidebarItem[],
+): SidebarLink[] {
   const links: SidebarLink[] = []
 
-  function recursivelyExtractLinks(items: SidebarItem[]): void {
+  function recursivelyExtractLinks(items: ResolvedSidebarItem[]): void {
     for (const item of items) {
       if (item.text && item.link) {
         links.push({
@@ -301,7 +308,7 @@ export function getFlatSideBarLinks(sidebar: SidebarItem[]): SidebarLink[] {
  */
 export function hasActiveLink(
   path: string,
-  items: SidebarItem | SidebarItem[],
+  items: ResolvedSidebarItem | ResolvedSidebarItem[],
 ): boolean {
   if (Array.isArray(items)) {
     return items.some((item) => hasActiveLink(path, item))
@@ -314,12 +321,10 @@ export function hasActiveLink(
       : false
 }
 
-function addBase(items: SidebarItem[], _base?: string): SidebarItem[] {
-  return [...items].map((_item) => {
-    const item = { ..._item }
-    const base = item.base || _base
-    if (base && item.link) item.link = base + item.link
-    if (item.items) item.items = addBase(item.items, base)
-    return item
-  })
+if (__VUEPRESS_DEV__ && (import.meta.webpackHot || import.meta.hot)) {
+  __VUE_HMR_RUNTIME__.updateSidebarData = (
+    data: Record<string, ResolvedSidebarItem[]>,
+  ) => {
+    sidebarData.value = data
+  }
 }

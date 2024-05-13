@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import VPLink from '@theme/VPLink.vue'
 import { inject } from 'vue'
-import type { NavItemWithLink } from '../../shared/index.js'
+import type { ResolvedNavItemWithLink } from '../../shared/resolved/navbar.js'
 
 defineProps<{
-  item: NavItemWithLink
+  item: ResolvedNavItemWithLink
 }>()
 
 const closeScreen = inject('close-screen') as () => void

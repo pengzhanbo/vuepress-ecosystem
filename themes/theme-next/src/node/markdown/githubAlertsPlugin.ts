@@ -1,23 +1,15 @@
 import type MarkdownIt from 'markdown-it'
-import type { ContainerOptions } from './containerPlugin.js'
+import type { MarkdownEnv } from 'vuepress/markdown'
+import { ensureLeadingSlash, resolveLocalePath } from 'vuepress/shared'
+import type { ContainerOptions } from '../../shared/index.js'
 
 const markerRE =
   /^\[!(TIP|NOTE|INFO|IMPORTANT|WARNING|CAUTION|DANGER)\]([^\n\r]*)/i
 
 export const gitHubAlertsPlugin = (
   md: MarkdownIt,
-  options?: ContainerOptions,
+  locales: Record<string, ContainerOptions>,
 ): void => {
-  const titleMark = {
-    tip: options?.tipLabel || 'TIP',
-    note: options?.noteLabel || 'NOTE',
-    info: options?.infoLabel || 'INFO',
-    important: options?.importantLabel || 'IMPORTANT',
-    warning: options?.warningLabel || 'WARNING',
-    caution: options?.cautionLabel || 'CAUTION',
-    danger: options?.dangerLabel || 'DANGER',
-  } as Record<string, string>
-
   md.core.ruler.after('block', 'github-alerts', (state) => {
     const tokens = state.tokens
     for (let i = 0; i < tokens.length; i++) {
@@ -40,7 +32,7 @@ export const gitHubAlertsPlugin = (
         const match = firstContent.content.match(markerRE)
         if (!match) continue
         const type = match[1].toLowerCase()
-        const title = match[2].trim() || titleMark[type] || capitalize(type)
+        const title = match[2].trim()
         firstContent.content = firstContent.content
           .slice(match[0].length)
           .trimStart()
@@ -55,13 +47,19 @@ export const gitHubAlertsPlugin = (
       }
     }
   })
-  md.renderer.rules.github_alert_open = function (tokens, idx) {
+  md.renderer.rules.github_alert_open = function (
+    tokens,
+    idx,
+    _,
+    env: MarkdownEnv,
+  ) {
     const { title, type } = tokens[idx].meta
+    const { filePathRelative } = env
+    const relativePath = ensureLeadingSlash(filePathRelative ?? '')
+    const localePath = resolveLocalePath(locales, relativePath)
+    const defaultTitle =
+      locales[localePath]?.[`${type}Label`] || type.toUpperCase()
     const attrs = ''
-    return `<div class="${type} custom-block github-alert"${attrs}><p class="custom-block-title">${title}</p>\n`
+    return `<div class="${type} custom-block github-alert"${attrs}><p class="custom-block-title">${title || defaultTitle}</p>\n`
   }
-}
-
-function capitalize(str: string): string {
-  return str.charAt(0).toUpperCase() + str.slice(1)
 }

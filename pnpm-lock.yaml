@@ -152,7 +152,7 @@ importers:
         version: link:../plugins/plugin-shiki
       '@vuepress/theme-default':
         specifier: workspace:*
-        version: link:../themes/theme-default
+        version: link:../themes/theme-next
       sass-loader:
         specifier: ^14.2.1
         version: 14.2.1(sass@1.77.1)(webpack@5.91.0)
@@ -236,7 +236,7 @@ importers:
         version: link:../plugins/plugin-watermark
       '@vuepress/theme-default':
         specifier: workspace:*
-        version: link:../themes/theme-default
+        version: link:../themes/theme-next
       sass:
         specifier: ^1.77.1
         version: 1.77.1
@@ -876,6 +876,9 @@ importers:
       '@vueuse/core':
         specifier: ^10.9.0
         version: 10.9.0(vue@3.4.27(typescript@5.4.5))
+      chokidar:
+        specifier: ^3.6.0
+        version: 3.6.0
       markdown-it-container:
         specifier: ^4.0.0
         version: 4.0.0

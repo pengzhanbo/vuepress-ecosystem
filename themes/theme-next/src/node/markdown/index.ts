@@ -1,17 +1,31 @@
+import { getLocalePaths, getRootLangPath } from '@vuepress/helper'
 import type MarkdownIt from 'markdown-it'
-import { isPlainObject } from 'vuepress/shared'
-import type { DefaultThemePluginsOptions } from '../../shared/index.js'
+import type { App } from 'vuepress'
+import type {
+  ContainerOptions,
+  DefaultThemeLocaleOptions,
+} from '../../shared/index.js'
+import { LOCALES_OPTIONS } from '../locales/index.js'
 import { containerPlugin } from './containerPlugin.js'
 import { gitHubAlertsPlugin } from './githubAlertsPlugin.js'
 
-export function setupMarkdown(
+export function extendsMarkdown(
   md: MarkdownIt,
-  themePlugins: DefaultThemePluginsOptions,
+  app: App,
+  localeOptions: DefaultThemeLocaleOptions,
 ): void {
-  containerPlugin(md, {
-    hasSingleTheme: isPlainObject(themePlugins.shiki)
-      ? !themePlugins.shiki.themes
-      : true,
+  const root = getRootLangPath(app)
+  const containerLocales: Record<string, ContainerOptions> = {
+    '/': localeOptions.container || LOCALES_OPTIONS[root].container || {},
+  }
+  getLocalePaths(app).forEach((localePath) => {
+    containerLocales[localePath] = {
+      ...LOCALES_OPTIONS[localePath === '/' ? root : localePath].container,
+      ...(localeOptions.locales?.[localePath]?.container ||
+        localeOptions.locales?.['/']?.container),
+    }
   })
-  gitHubAlertsPlugin(md)
+
+  containerPlugin(md, containerLocales)
+  gitHubAlertsPlugin(md, containerLocales)
 }

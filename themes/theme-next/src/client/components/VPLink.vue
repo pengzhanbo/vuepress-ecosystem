@@ -27,7 +27,9 @@ const link = computed(() => {
 function linkTo(e: Event): void {
   if (!isExternal.value) {
     e.preventDefault()
-    if (link.value) router.push({ path: link.value })
+    if (link.value) {
+      router.push(link.value)
+    }
   }
 }
 </script>

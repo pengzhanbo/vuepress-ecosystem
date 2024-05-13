@@ -1,14 +1,14 @@
 <script lang="ts" setup>
 import VPNavScreenMenuGroup from '@theme/VPNavScreenMenuGroup.vue'
 import VPNavScreenMenuLink from '@theme/VPNavScreenMenuLink.vue'
-import { useData } from '../composables/data.js'
+import { useNavbarData } from '../composables/nav.js'
 
-const { theme } = useData()
+const navbar = useNavbarData()
 </script>
 
 <template>
-  <nav v-if="theme.navbar" class="vpNavScreenMenu">
-    <template v-for="item in theme.navbar" :key="item.text">
+  <nav v-if="navbar.length" class="vpNavScreenMenu">
+    <template v-for="item in navbar" :key="item.text">
       <VPNavScreenMenuLink v-if="'link' in item" :item="item" />
       <VPNavScreenMenuGroup
         v-else

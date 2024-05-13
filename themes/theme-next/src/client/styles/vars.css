@@ -552,3 +552,10 @@
   --vp-carbon-ads-hover-text-color: var(--vp-c-brand-1);
   --vp-carbon-ads-hover-poweredby-color: var(--vp-c-text-1);
 }
+
+/**
+ * plugin-nprogress
+ * -------------------------------------------------------------------------- */
+#nprogress {
+  --nprogress-color: var(--vp-c-brand-1);
+}

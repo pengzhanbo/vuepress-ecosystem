@@ -20,6 +20,7 @@ const require = createRequire(import.meta.url)
 export default defineUserConfig({
   // set site base to default value
   base: (process.env.BASE as `/${string}/` | '/') || '/',
+  lang: 'en-US',
 
   // extra tags in `<head>`
   head,

@@ -8,24 +8,24 @@ import { seoPlugin } from '@vuepress/plugin-seo'
 import { shikiPlugin } from '@vuepress/plugin-shiki'
 import { sitemapPlugin } from '@vuepress/plugin-sitemap'
 import { themeDataPlugin } from '@vuepress/plugin-theme-data'
-import type { PluginConfig } from 'vuepress/core'
+import type { App, PluginConfig } from 'vuepress/core'
 import { isPlainObject } from 'vuepress/shared'
 import type {
   DefaultThemeLocaleOptions,
   DefaultThemePluginsOptions,
 } from '../shared/index.js'
+import { resolveThemeData } from './config/resolveThemeData.js'
 
-interface InitPluginsOptions {
+interface PluginsOptions {
   hostname?: string
   themePlugins: DefaultThemePluginsOptions
   localeOptions: DefaultThemeLocaleOptions
 }
 
-export function initPlugins({
-  hostname,
-  themePlugins,
-  localeOptions,
-}: InitPluginsOptions): PluginConfig {
+export function getPlugins(
+  app: App,
+  { hostname, themePlugins, localeOptions }: PluginsOptions,
+): PluginConfig {
   const plugins: PluginConfig = []
 
   if (themePlugins.activeHeaderLinks !== false) {
@@ -111,7 +111,9 @@ export function initPlugins({
   }
 
   // @vuepress/plugin-theme-data
-  plugins.push(themeDataPlugin({ themeData: localeOptions }))
+  plugins.push(
+    themeDataPlugin({ themeData: resolveThemeData(app, localeOptions) }),
+  )
 
   return plugins
 }

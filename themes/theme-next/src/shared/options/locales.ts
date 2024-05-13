@@ -1,79 +1,9 @@
-import type { CopyCodePluginOptions } from '@vuepress/plugin-copy-code'
-import type { LinksCheckPluginOptions } from '@vuepress/plugin-links-check'
-import type { SeoPluginOptions } from '@vuepress/plugin-seo'
-import type { ShikiPluginOptions } from '@vuepress/plugin-shiki'
-import type { SitemapPluginOptions } from '@vuepress/plugin-sitemap'
 import type { ThemeData } from '@vuepress/plugin-theme-data'
 import type { UseDarkOptions } from '@vueuse/core'
 import type { LocaleData } from 'vuepress/shared'
-import type { DefaultThemeImage, SocialLink } from './basic.js'
-import type { NavItem, Sidebar } from './nav.js'
-
-export interface DefaultThemePluginsOptions {
-  /**
-   * Enable @vuepress/plugin-active-header-links or not
-   */
-  activeHeaderLinks?: boolean
-
-  /**
-   * Enable @vuepress/plugin-back-to-top or not
-   */
-  backToTop?: boolean
-
-  /**
-   * Enable @vuepress/plugin-container or not
-   */
-  container?: {
-    tip?: boolean
-    info?: boolean
-    warning?: boolean
-    danger?: boolean
-    details?: boolean
-    important?: boolean
-    caution?: boolean
-    codeGroup?: boolean
-  }
-
-  /**
-   * Enable @vuepress/plugin-copy-code or not
-   */
-  copyCode?: CopyCodePluginOptions | boolean
-
-  /**
-   * Enable @vuepress/plugin-git or not
-   */
-  git?: boolean
-
-  /**
-   * Enable @vuepress/plugin-links-check or not
-   */
-  linksCheck?: LinksCheckPluginOptions | boolean
-
-  /**
-   * Enable @vuepress/plugin-medium-zoom or not
-   */
-  mediumZoom?: boolean
-
-  /**
-   * Enable @vuepress/plugin-nprogress or not
-   */
-  nprogress?: boolean
-
-  /**
-   * Enable @vuepress/plugin-prismjs or not
-   */
-  shiki?: boolean | ShikiPluginOptions
-
-  /**
-   * Enable @vuepress/plugin-seo or not
-   */
-  seo?: Partial<SeoPluginOptions> | boolean
-
-  /**
-   * Enable @vuepress/plugin-sitemap or not
-   */
-  sitemap?: Partial<SitemapPluginOptions> | boolean
-}
+import type { NavItem } from '../navbar.js'
+import type { DefaultThemeImage, SocialLink } from '../shared.js'
+import type { Sidebar } from '../sidebar.js'
 
 export type DefaultThemeLocaleOptions = DefaultThemeData
 
@@ -83,29 +13,40 @@ export interface DefaultThemeLocaleData extends LocaleData {
   /**
    * The logo file of the site.
    *
+   * 站点 Logo
+   *
    * @example '/logo.svg'
    */
   logo?: DefaultThemeImage
 
   /**
    * Overrides the link of the site logo.
+   *
+   * 覆盖站点 Logo 的链接
    */
   logoLink?: string | { link?: string; rel?: string; target?: string }
 
   /**
    * Custom site title in navbar. If the value is undefined,
    * `userConfig.title` will be used.
+   *
+   * 自定义导航栏中的站点标题。如果值为 `undefined`，将使用 `userConfig.title`
    */
   siteTitle?: string | false
 
   /**
    * Custom header levels of outline in the aside component.
    *
-   * @default 2
+   * 自定义侧边栏中的标题层级
+   *
+   * @default [2,3]
    */
   outline?: Outline | false
 
   /**
+   * The title of the outline
+   *
+   * 侧边栏 标题
    *
    * @default 'On this page'
    */
@@ -113,23 +54,38 @@ export interface DefaultThemeLocaleData extends LocaleData {
 
   /**
    * The navbar items.
+   *
+   * 导航栏
    */
   navbar?: NavItem[]
 
   /**
    * The sidebar items.
+   *
+   * 侧边栏
    */
   sidebar?: Sidebar
 
   /**
+   * The sidebar menu label
+   *
+   * 侧边栏 菜单标签
    * @default 'Menu'
    */
   sidebarMenuLabel?: string
 
   /**
    * Set to `false` to prevent rendering of aside container.
+   *
    * Set to `true` to render the aside to the right.
+   *
    * Set to `left` to render the aside to the left.
+   *
+   * 将此值设置为 `false` 可禁用 aside 容器。
+   *
+   * 将此值设置为 `true` 将在页面右侧渲染。
+   *
+   * 将此值设置为 `left` 将在页面左侧渲染。
    *
    * @default true
    */
@@ -137,6 +93,8 @@ export interface DefaultThemeLocaleData extends LocaleData {
 
   /**
    * Appearance color mode
+   *
+   * 是否开启 浅色/深色模式
    *
    * @default true
    */
@@ -150,6 +108,11 @@ export interface DefaultThemeLocaleData extends LocaleData {
       > & { initialValue?: 'dark' })
 
   /**
+   * Can be used to customize the dark mode switch label.
+   * This label is only displayed in the mobile view.
+   *
+   * 用于自定义深色模式开关标签，该标签仅在移动端视图中显示。
+   *
    * @default 'Appearance'
    */
   darkModeSwitchLabel?: string
@@ -266,9 +229,9 @@ export interface DefaultThemeLocaleData extends LocaleData {
   footer?: Footer
 
   /**
-   * Enable/disable return to top button
+   * The container configuration.
    */
-  returnToTop?: boolean
+  container?: ContainerOptions
 
   /**
    * @default 'Return to top'
@@ -394,4 +357,18 @@ export interface NotFoundOptions {
    * @default '404'
    */
   code?: string
+}
+
+/**
+ * Container options
+ */
+export interface ContainerOptions {
+  infoLabel?: string
+  noteLabel?: string
+  tipLabel?: string
+  warningLabel?: string
+  dangerLabel?: string
+  detailsLabel?: string
+  importantLabel?: string
+  cautionLabel?: string
 }

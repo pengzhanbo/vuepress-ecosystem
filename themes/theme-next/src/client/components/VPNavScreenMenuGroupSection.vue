@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import VPNavScreenMenuGroupLink from '@theme/VPNavScreenMenuGroupLink.vue'
-import type { NavItemWithLink } from '../../shared/index.js'
+import type { ResolvedNavItemWithLink } from '../../shared/resolved/navbar.js'
 
 defineProps<{
   text?: string
-  items: NavItemWithLink[]
+  items: ResolvedNavItemWithLink[]
 }>()
 </script>
 

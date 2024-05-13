@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import VPBackdrop from '@theme/VPBackdrop.vue'
-import VPBackToTop from '@theme/VPBackToTop.vue'
 import VPContent from '@theme/VPContent.vue'
 import VPFooter from '@theme/VPFooter.vue'
 import VPLocalNav from '@theme/VPLocalNav.vue'
@@ -42,7 +41,9 @@ provide('hero-image-slot-exists', heroImageSlotExists)
     :class="frontmatter.pageClass"
   >
     <slot name="layout-top" />
+
     <VPSkipLink />
+
     <VPBackdrop class="backdrop" :show="isSidebarOpen" @click="closeSidebar" />
 
     <VPNav>
@@ -116,11 +117,10 @@ provide('hero-image-slot-exists', heroImageSlotExists)
       <template #aside-ads-after><slot name="aside-ads-after" /></template>
     </VPContent>
 
-    <VPBackToTop />
-
     <VPFooter />
     <slot name="layout-bottom" />
   </div>
+
   <Content v-else />
 </template>
 

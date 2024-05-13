@@ -1,12 +1,12 @@
 <script lang="ts" setup>
 import VPLink from '@theme/VPLink.vue'
 import { resolveRoutePath } from 'vuepress/client'
-import type { NavItemWithLink } from '../../shared/index.js'
+import type { ResolvedNavItemWithLink } from '../../shared/resolved/navbar.js'
 import { useData } from '../composables/data.js'
 import { isActive } from '../utils/index.js'
 
 defineProps<{
-  item: NavItemWithLink
+  item: ResolvedNavItemWithLink
 }>()
 
 const { page } = useData()

@@ -1,6 +1,18 @@
-import { ref, watch } from 'vue'
+import { navbarData as navbarDataRaw } from '@internal/navbar'
+import { computed, ref, watch } from 'vue'
 import type { Ref } from 'vue'
-import { useRoute } from 'vuepress/client'
+import { useRoute, useRouteLocale } from 'vuepress/client'
+import type { ResolvedNavItem } from '../../shared/resolved/navbar.js'
+
+export type NavbarLocalesRef = Ref<Record<string, ResolvedNavItem[]>>
+
+const navbarData: NavbarLocalesRef = ref(navbarDataRaw)
+
+export const useNavbarData = (): Ref<ResolvedNavItem[]> => {
+  const routeLocale = useRouteLocale()
+
+  return computed(() => navbarData.value[routeLocale.value] || [])
+}
 
 export interface UseNavReturn {
   isScreenOpen: Ref<boolean>
@@ -41,5 +53,13 @@ export function useNav(): UseNavReturn {
     openScreen,
     closeScreen,
     toggleScreen,
+  }
+}
+
+if (__VUEPRESS_DEV__ && (import.meta.webpackHot || import.meta.hot)) {
+  __VUE_HMR_RUNTIME__.updateNavbarData = (
+    data: Record<string, ResolvedNavItem[]>,
+  ) => {
+    navbarData.value = data
   }
 }

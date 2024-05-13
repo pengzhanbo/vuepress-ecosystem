@@ -15,7 +15,7 @@ export function usePrevNext(): ComputedRef<PrevNext> {
   const { theme, page, frontmatter } = useData()
 
   return computed(() => {
-    const sidebar = getSidebar(theme.value.sidebar, page.value.path)
+    const sidebar = getSidebar(page.value.path)
     const links = getFlatSideBarLinks(sidebar)
 
     // ignore inner-page links with hashes
